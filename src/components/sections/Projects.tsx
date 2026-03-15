@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { ProjectCard } from "@/components/shared/ProjectCard";
 import { projects } from "@/data/projects";
@@ -39,9 +40,9 @@ export function Projects() {
               key={cat.value}
               onClick={() => setActive(cat.value)}
               className={cn(
-                "rounded-full border px-4 py-1.5 text-sm font-medium transition-colors",
+                "rounded-full border px-4 py-1.5 text-sm font-medium transition-all duration-200",
                 active === cat.value
-                  ? "border-primary bg-primary text-primary-foreground"
+                  ? "border-primary bg-primary text-primary-foreground scale-[1.03]"
                   : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
               )}
             >
@@ -50,12 +51,21 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Project grid */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((project) => (
-            <ProjectCard key={project.title} project={project} />
-          ))}
-        </div>
+        {/* Project grid with layout animation */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+            className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {filtered.map((project, i) => (
+              <ProjectCard key={project.title} project={project} index={i} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </SectionWrapper>
   );

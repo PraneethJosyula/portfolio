@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
@@ -25,32 +26,44 @@ export function Contact() {
 
         {/* Social links */}
         <div className="mt-8 flex items-center justify-center gap-4">
-          {socials.map((social) => {
+          {socials.map((social, i) => {
             const Icon = iconMap[social.icon];
             return (
-              <a
+              <motion.a
                 key={social.label}
                 href={social.href}
                 target={social.href.startsWith("mailto:") ? undefined : "_blank"}
                 rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: 0.1 + i * 0.08 }}
+                whileHover={{ y: -3, scale: 1.05 }}
                 className="flex h-12 w-12 items-center justify-center rounded-xl border border-border/60 text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
                 aria-label={social.label}
               >
                 {Icon && <Icon className="h-5 w-5" />}
-              </a>
+              </motion.a>
             );
           })}
         </div>
 
         {/* Resume download */}
-        <Button
-          render={<a href="/resume.pdf" download />}
-          size="lg"
-          className="mt-8 rounded-full"
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.3 }}
         >
-          <Download className="mr-2 h-4 w-4" />
-          Download Resume
-        </Button>
+          <Button
+            render={<a href="/resume.pdf" download />}
+            size="lg"
+            className="mt-8 rounded-full"
+          >
+            <Download className="mr-2 h-4 w-4" />
+            Download Resume
+          </Button>
+        </motion.div>
       </div>
     </SectionWrapper>
   );

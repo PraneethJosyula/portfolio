@@ -18,6 +18,14 @@ export interface Project {
   github?: string;
 }
 
+export interface Education {
+  institution: string;
+  degree: string;
+  period: string;
+  gpa: string;
+  location?: string;
+}
+
 export interface SkillGroup {
   label: string;
   skills: string[];

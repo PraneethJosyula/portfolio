@@ -21,6 +21,7 @@ export function Experience() {
               key={exp.company}
               experience={exp}
               isLast={i === experiences.length - 1}
+              index={i}
             />
           ))}
         </div>

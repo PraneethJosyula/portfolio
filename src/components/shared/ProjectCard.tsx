@@ -1,14 +1,24 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Project } from "@/types";
 
 interface ProjectCardProps {
   project: Project;
+  index: number;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, index }: ProjectCardProps) {
   return (
-    <div className="group flex h-full flex-col rounded-xl border border-border/60 bg-card p-5 transition-all duration-200 hover:border-primary/30 hover:-translate-y-0.5">
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.45, delay: index * 0.08, ease: "easeOut" }}
+      className="group flex h-full flex-col rounded-xl border border-border/60 bg-card p-5 transition-all duration-300 hover:border-primary/30 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5"
+    >
       <h3 className="font-display text-base font-semibold leading-snug">
         {project.title}
       </h3>
@@ -50,6 +60,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           )}
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { hobbies } from "@/data/hobbies";
 import {
@@ -33,15 +34,19 @@ export function Hobbies() {
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {hobbies.map((hobby) => {
+          {hobbies.map((hobby, i) => {
             const Icon = iconMap[hobby.icon];
             return (
-              <div
+              <motion.div
                 key={hobby.title}
-                className="rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-primary/30"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="rounded-xl border border-border/60 bg-card p-5 transition-all duration-300 hover:border-primary/30 hover:-translate-y-0.5 hover:shadow-md hover:shadow-primary/5"
               >
                 {Icon && (
-                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 transition-transform duration-300 group-hover:scale-110">
                     <Icon className="h-5 w-5 text-primary" />
                   </div>
                 )}
@@ -51,7 +56,7 @@ export function Hobbies() {
                 <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                   {hobby.description}
                 </p>
-              </div>
+              </motion.div>
             );
           })}
         </div>
